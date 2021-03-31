@@ -1,0 +1,211 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+
+\usepackage{comment}
+
+\title{Centralne Twierdzenie Graficzne}
+\author{Aleksandra Klimek }
+\date{December 2020}
+
+\begin{document}
+\maketitle
+
+\section{Rozkłady}
+
+\begin{enumerate}
+    \item \textbf{Rozkład dwumianowy - Binomial} \\
+\textbf{Rozkłąd dwumianowy(Bernoulliego)} dyskretny rozkład prawdopodobieństwa opisujący liczbę sukcesów $k$ w ciągu $n$ niezależnych prób, z których każda ma stałe prawdopodobieństwo sukcesu równe $p$ Pojedynczy eksperyment nosi nazwę próby Bernoulliego. 
+\begin{itemize}
+    \item  \textbf{Funkcja gęstości - dbinom} \\
+Otrzymujemy rozkład prawdopodobieństwa w każdym punkcie.\\ 
+W Quizie jest 12 pytań wielokrotnego wyboru. Każde pytanie ma 5 możliwych odpowiedzi, tylko jedna jest poprawna. Znajdz prawdopodobieństwo uzyskania dokładnie 4 poprawnych odpowiedzi, zakładając że uczeń odpowie losowo na każde pytanie. \\
+\textit{Ponieważ tylko 1 z 5 jest poprawna to prawdopodobieństwo
+trafnej odpowiedzi wynosi 1/5 = 0.2 }
+<<>>=
+x <- 4; n <- 12; p<- 0.2 
+dbinom(x,n,p)
+@
+\item  \textbf{Dystrybuanta-pbinom} \\ 
+Prawdopodobieństwo wypadniencia orła symetryczną monetą wynosi 0.5. Obliczamy prawdopodobieństwo wypadnięcia 4 lub mniej orłów w 6 rzutach.
+<<>>=
+n <- 6; p<- 0.5; q <- 4
+pbinom(q,n,p)
+@
+\newpage
+\item \textbf{Funckja kwantylowa- qbinom} \\ 
+Ile orłów wypadnie z prawdopodobieństwem równym 0.25 .
+<<>>=
+n <- 6; p<-0.5; x <- 0.25
+qbinom(x,n,p)
+@
+\item \textbf{Generowanie liczb pseudolosowych - rbinom} \\ 
+Wylosujemy 10 liczb ze 100 z prawdopodbieństwem 0.3 .
+<<>>=
+x<-10; n <-100; p <-0.3;
+rbinom(x , n, p)
+@
+\end{itemize}
+\item \textbf{Rozkład Hipergeometryczny - Hypergeometrical} \\ 
+\textbf{Rozkład hipergeometryczny} to dyskretny rozkład prawdopodobieństwa związany z tzw. schematem urnowym. Zmienna losowa o tym rozkładzie określa liczbę elementów jednego typu występujących w n-elementowej próbie wylosowanej z urny zawierającej m elementów tego typu wśród $N$ wszystkich elementów.\\
+\begin{itemize}
+    \item \textbf{Funckja gęstości - dhyper} \\
+    Funkcja zwracaj gęstość prawdopodobieństwa.
+<<>>=
+n <- 5# liczba kul bialych
+m<-15#liczba kul czarnych
+k <-6 # liczba kul wyciagniętych z urn
+x <-0:6 #liczba wylosowanych kul bialych
+dhyper(x,n,m,k)
+@
+\item \textbf{Dystrybuanta - phyper}\\
+Dystrybuanta dla rozkładu hipergeometrycznego. 
+<<>>=
+n <- 5# liczba kul bialych
+m<-15#liczba kul czarnych
+k <-6 # liczba kul wyciagniętych z urn
+x <-0:6 #liczba wylosowanych kul bialych
+phyper(x,n,m,k)
+@
+\newpage
+\item \textbf{Funkcja kwantylowa - qhyper} \\
+Otrzymamy skumulowany rozkład prawdopodobieństwa dla rozkłądu hypergeometrycznego
+<<>>=
+x <-seq(0,1, by = 0.1)
+n <- 8
+m <- 4
+k <- 4
+qhyper(x,n,m,k)
+@
+
+\item \textbf{Generator losowy - rhyper }\\ 
+Zwraca wektor liczb losowych o rozkładzie hypergeometrycznym.
+
+<<>>=
+w <- 0:10 
+n <- 8
+m <- 4
+k <- 4
+rhyper(w,n,m,k)
+@
+
+\end{itemize}
+\item \textbf{Chi kwadrat - Chi square} \\
+\textbf{Rozkład chi kwadrat} (zapisywany także jako $\chi^2$-rozkład zmiennej losowej, która jest sumą $k$ kwadratów niezależnych zmiennych losowych o standardowym rozkładzie normalnym. Liczbę naturalną $k$ nazywa się liczbą stopni swobody rozkładu zmiennej losowej.\\ 
+\begin{itemize}
+    \item \textbf{Gęstośc rozkładu Chi kwadrat - dchisq}\\
+    Funckja zwraca gęstośc prawdopodobieństwa dla danego x. 
+    <<>>=
+    x<- 5; df =3; ncp = 1
+    dchisq(x, df, ncp)
+    @
+    \item \textbf{Dystrybuanta Chi kwadrat - pchisq}\\
+    Zwraca rozkłąd prawdopodobieństwa. 
+    <<>>= 
+    x<-2; df =2; ncp = 0
+    dchisq(x, df, ncp)
+    @
+    \newpage
+  \item \textbf{Funkcja kwantylowa Chi kwadrat - qchisq}\\
+  Zwraca odwrotnie skumulowany rozkłąd dla danego prawdopodobieństwa ( w tym przypadku dla p = 0.95)
+<<>>=
+p <- 0.95; df <-7; ncp = 0
+qchisq (p, df , ncp  )
+@
+  \item \textbf{Generator losowy Chi kwadrat - rchisq} \\
+  Funckja zwraca wektor licz losowych o rozkładzie Chi kwadrat.
+  <<>>=
+  n <- 10; df <-15; ncp <-0.5
+  rchisq (n, df , ncp  )
+  @
+\end{itemize}
+
+\item \textbf{Rozkład wykładniczy- Exponential} \\
+\textbf{Rozkład wykładniczy }– rozkład zmiennej losowej opisujący sytuację, w której obiekt może przyjmować stany $X$  i $Y$ przy czym obiekt w stanie $X$ może ze stałym prawdopodobieństwem przejść w stan $Y$ w jednostce czasu. Prawdopodobieństwo wyznaczane przez ten rozkład to prawdopodobieństwo przejścia ze stanu $X$ w stan $Y$ w czasie $\Delta t$. \\
+\begin{itemize}
+    \item \textbf{Gęstość rozkładu wykładniczego - dexp}\\
+    Funkcja zwraca gęstość prawdopodbieństwa.
+    <<>>=
+x <- 2
+dexp(x, rate = 1, log = FALSE)
+@
+  \item \textbf{Dystrybuanta rozkładu wykładniczego - pexp}\\
+    Funkcja zwraca rozkład prawdopodbieństwa.
+    <<>>=
+x <- 1
+pexp(x, rate = 3, log = FALSE)
+@
+  \item \textbf{Funkcja kwantylowa rozkładu wykładniczego - qexp}\\
+    Funkcja zwraca odwrotny skumulowany rozkład prawdopodbieństwa.
+    <<>>=
+x <- 0.1
+qexp(x, rate = 4, log = FALSE)
+@
+\newpage
+  \item \textbf{Generator losowy rozkładu wykładniczego - rexp}\\
+    Funkcja zwraca wektor licz losowych o rozkładzie wykładniczym.
+    <<>>=
+x <- 7
+rexp(x, rate =2/3)
+@
+\end{itemize}
+
+\item \textbf{Weilbull} \\
+\textbf{Rozkład Weibulla} – ciągły rozkład prawdopodobieństwa często stosowany w analizie przeżycia do modelowania sytuacji, gdy prawdopodobieństwo śmierci/awarii zmienia się w czasie.
+\begin{itemize}
+    \item \textbf{Gęstość rozkładu Weibulla - dweibull}\\
+    Funkcja zwraca gęstość prawdopodbieństwa.
+    <<>>=
+<<>>=
+x <- 0.1:1
+#x <- c(0, rlnorm(50))
+dweibull(x, shape=1, scale = 1, log = FALSE)
+@
+@
+  \item \textbf{Dystrybuanta rozkładu Weibulla - pdweibull}\\
+    Funkcja zwraca rozkład prawdopodbieństwa.
+    <<>>=
+x <- 1
+pweibull(x, shape = 3, scale = 1)
+@
+  \item \textbf{Funkcja kwantylowa rozkładu Weibulla - qdweibull}\\
+    Funkcja zwraca odwrotny skumulowany rozkład prawdopodbieństwa.
+    <<>>=
+x <- 0.1
+qweibull(x, shape = 5, scale = 1)
+@
+  \item \textbf{Generator losowy rozkładu wykładniczego - rdweibull}\\
+    Funkcja zwraca wektor licz losowych o rozkładzie Weibulla.
+    <<>>=
+x <- 7
+rweibull(x, shape = 3, scale = 1)
+@
+\end{itemize}
+
+\end{enumerate}
+\newpage
+\section{Badanie rozkładów}
+<<>>=
+N=10000 # number of sample values for each random variable
+par(mfrow=c(2,2))# creates a 2x2 grid of plots filled by the loop
+# n is the number of independent U(0,1) random variables
+for(n in c(2,10,50,100)){
+  mat=matrix(runif(n*N),nrow=n,ncol=N) # creates an nxN matrix  # sum() #applied to mat column-wise
+  S=apply(mat,2,sum)
+  Mea = apply(mat,2,mean)
+  Zn=(S-n/2)/sqrt(n/12) 
+  hist(Mea,freq=FALSE,nclass=50,col='blue',ylab='Density', main=paste('Density Histogram for n=',n),xlab='')
+    
+}
+  
+@
+Dla \textbf{N=10}, dla \textbf{N = 50 } oraz dla \textbf{N = 100}, rozkład wygląda jak rozkład normalny. \\ \\
+\textbf{Krótka analiza histogramów}\\
+Gdy współczynnik skośności jest bliski 0 mamy do czynienia z rozkładem symetrycznym oraz wartość średnia = moda = madiana. \\ 
+Gdy współczynnik skośności jest większy od zera zachodzi skośnośc prawostronna oraz moda < mediana < wartośc średnia.\\
+Gdy współczynnik skośności jest mniejszy od zera zachodzi skośnośc lewostornna oraz moda > mediana > wartośc średnia. \\ \\
+Miarą skośności rozkładu jest kurtoza. \\
+Dla N = 2 histogram jest słaszczony wtedy kurtoza jest mniejsza od zera, nastomiast dla pozostałych kurtoza równa się zero, a więc sa to rozkłądy normalne. \\
+
+
+\end{document}
